@@ -294,7 +294,7 @@
             try {
                 // Získání dostupných zařízení
                 const device = await navigator.bluetooth.requestDevice({
-                    acceptAllDevices: true, // Povolit připojení ke všem zařízením
+                    //acceptAllDevices: true, // Povolit připojení ke všem zařízením
                     optionalServices: ['000000ee-0000-1000-8000-00805f9b34fb'], 
                 });
                 // Připojení k vybranému zařízení
@@ -305,6 +305,12 @@
                 console.log('Seznam služeb na zařízení:');
                 services.forEach(service => {
                     console.log('Service UUID:', service.uuid);
+                    service.getCharacteristics().then(characteristics => {
+                        console.log('Seznam charakteristik:');
+                        characteristics.forEach(characteristic => {
+                            console.log('Characteristic UUID:', characteristic.uuid);
+                        });
+                    });
                 });
                 // Odpojení od zařízení
                 await server.disconnect();
