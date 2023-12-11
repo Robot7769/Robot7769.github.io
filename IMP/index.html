@@ -294,7 +294,6 @@
             try {
                 // Získání dostupných zařízení
                 const device = await navigator.bluetooth.requestDevice({
-                    acceptAllDevices: true, // Povolit připojení ke všem zařízením
                     filters: [{ namePrefix: 'ESP' }], // Filtr pro vyhledání zařízení
                 });
                 // Připojení k vybranému zařízení
