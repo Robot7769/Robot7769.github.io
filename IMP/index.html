@@ -60,7 +60,7 @@
 
     //Global Variables to Handle Bluetooth
     var bleDevice = null;
-    var bleServer;
+    var bleServer = null;
     var bleServiceFound;
     var queueCharacteristicFound;
 
@@ -99,7 +99,7 @@
     // Connect to BLE Device and Enable Notifications
     async function connectToDevice() {
         try {
-            if (bleDevice == null) {
+            if (bleDevice === null) {
                 bleDevice = await navigator.bluetooth.requestDevice({
                     filters: [{ namePrefix: deviceNamePrefix }], // Filtr pro vyhledání zařízení
                 });
@@ -142,13 +142,14 @@
 
     function disconnectDevice() {
         console.log("Disconnect Device.");
-        if (bleServer && bleServer.connected) {
-            bleServer.disconnect().then(() => {
+        if (bleServer === null && bleServer.connected) {
+            const oldServer = bleServer.disconnect();
+            oldServer.then(() => {
                 console.log("Device Disconnected");
                 bleStateContainer.innerHTML = "Zařízení odpojeno";
                 bleStateContainer.style.color = "#d13a30";
-            })
-            .catch(error => {
+                bleServer = null;
+            }).catch(error => {
                 console.log("An error occurred:", error);
             });
             
@@ -159,42 +160,42 @@
         }
     }
 
-        async function showBluetoothDevices() {
-            try {
-                // Získání dostupných zařízení
-                const device = await navigator.bluetooth.requestDevice({
-                    filters: [{ namePrefix: deviceNamePrefix }], // Filtr pro vyhledání zařízení
-                });
-                // Připojení k vybranému zařízení
-                const server = await device.gatt.connect();
-                // Získání seznamu služeb na zařízení
-                const services = await server.getPrimaryServices();
-                // Vypsání služeb do konzole
-                console.log('Seznam služeb na zařízení:');
-                for (const service of services) {
-                    console.log('Service UUID:', service.uuid);
-                    // Získání charakteristik pouze pokud je server GATT připojen
-                    if (server.connected) {
-                        const characteristics = await service.getCharacteristics();
-                        console.log('Seznam charakteristik:');
-                        for (const characteristic of characteristics) {
-                            console.log('Characteristic UUID:', characteristic.uuid);
-                            if (characteristic.uuid == '000077e7-0000-1000-8000-00805f9b34fb') {
-                                const value = "pulz";
-                                const data = new TextEncoder().encode(value);
-                                await characteristic.writeValue(data);
-                            }
+    async function showBluetoothDevices() {
+        try {
+            // Získání dostupných zařízení
+            const device = await navigator.bluetooth.requestDevice({
+                filters: [{ namePrefix: deviceNamePrefix }], // Filtr pro vyhledání zařízení
+            });
+            // Připojení k vybranému zařízení
+            const server = await device.gatt.connect();
+            // Získání seznamu služeb na zařízení
+            const services = await server.getPrimaryServices();
+            // Vypsání služeb do konzole
+            console.log('Seznam služeb na zařízení:');
+            for (const service of services) {
+                console.log('Service UUID:', service.uuid);
+                // Získání charakteristik pouze pokud je server GATT připojen
+                if (server.connected) {
+                    const characteristics = await service.getCharacteristics();
+                    console.log('Seznam charakteristik:');
+                    for (const characteristic of characteristics) {
+                        console.log('Characteristic UUID:', characteristic.uuid);
+                        if (characteristic.uuid == '000077e7-0000-1000-8000-00805f9b34fb') {
+                            const value = "pulz";
+                            const data = new TextEncoder().encode(value);
+                            await characteristic.writeValue(data);
                         }
-                    } else {
-                        console.error('Server GATT není připojen.');
                     }
+                } else {
+                    console.error('Server GATT není připojen.');
                 }
-                // Odpojení od zařízení
-                await server.disconnect();
-            } catch (error) {
-                console.error('Chyba:', error);
             }
+            // Odpojení od zařízení
+            await server.disconnect();
+        } catch (error) {
+            console.error('Chyba:', error);
         }
+    }
 
 
 </script>
