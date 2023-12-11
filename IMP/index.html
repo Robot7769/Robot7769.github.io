@@ -78,7 +78,7 @@
 
 
     // Disconnect Button
-    disconnectButton.addEventListener('click', () => disconnectDevice());
+    disconnectButton.addEventListener('click', async () => disconnectDevice());
 
     // Write to the ESP32 LED Characteristic
     anim1.addEventListener('click', () => writeOnCharacteristic("rainbow"));
@@ -141,18 +141,14 @@
         }
     }
 
-    function disconnectDevice() {
+    async function disconnectDevice() {
         console.log("Disconnect Device.");
         if (bleServer !== null && bleServer.connected) {
-            const oldServer = bleServer.disconnect();
-            oldServer.then(() => {
-                console.log("Device Disconnected");
-                bleStateContainer.innerHTML = "Zařízení odpojeno";
-                bleStateContainer.style.color = "#d13a30";
-                bleServer = null;
-            }).catch(error => {
-                console.log("An error occurred:", error);
-            });
+            await bleServer.disconnect();
+            console.log("Device Disconnected");
+            bleStateContainer.innerHTML = "Zařízení odpojeno";
+            bleStateContainer.style.color = "#d13a30";
+            bleServer = null;
             
         } else {
             // Throw an error if Bluetooth is not connected
