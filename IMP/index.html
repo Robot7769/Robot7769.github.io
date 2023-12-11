@@ -303,15 +303,19 @@
                 const services = await server.getPrimaryServices();
                 // Vypsání služeb do konzole
                 console.log('Seznam služeb na zařízení:');
-                services.forEach(service => {
+                for (const service of services) {
                     console.log('Service UUID:', service.uuid);
-                    service.getCharacteristics().then(characteristics => {
+                    // Získání charakteristik pouze pokud je server GATT připojen
+                    if (server.connected) {
+                        const characteristics = await service.getCharacteristics();
                         console.log('Seznam charakteristik:');
-                        characteristics.forEach(characteristic => {
+                        for (const characteristic of characteristics) {
                             console.log('Characteristic UUID:', characteristic.uuid);
-                        });
-                    });
-                });
+                        }
+                    } else {
+                        console.error('Server GATT není připojen.');
+                    }
+                }
                 // Odpojení od zařízení
                 await server.disconnect();
             } catch (error) {
