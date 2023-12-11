@@ -15,7 +15,7 @@
             <div class="card">
                 <p>
                     <button id="connectBleButton" class="connectButton"> Připojit BLE</button>
-                    <button id="connectBleBtn" class="connectButton"> My connect -- testing </button>
+                    <!--<button id="connectBleBtn" class="connectButton"> My connect -- testing </button>--> <!-- testing -->
                     <button id="disconnectBleButton" class="disconnectButton"> Odpojit BLE Device</button>
                 </p>
                 <p class="gray-label">Stav: <strong><span id="bleState" style="color:#d13a30;">Nepřipojeno</span></strong></p>
@@ -43,7 +43,7 @@
 
     // DOM Elements
     const connectButton = document.getElementById('connectBleButton');
-    const bleBtn = document.getElementById('connectBleBtn');
+    //! testing const bleBtn = document.getElementById('connectBleBtn');
     const disconnectButton = document.getElementById('disconnectBleButton');
     const anim1 = document.getElementById('anim1');
     const anim2 = document.getElementById('anim2');
@@ -71,9 +71,10 @@
         }
     });
 
-    bleBtn.addEventListener('click', async event => {
-        await showBluetoothDevices();
-    });
+    //! testing
+    // bleBtn.addEventListener('click', async event => {
+    //     await showBluetoothDevices();
+    // });
 
 
     // Disconnect Button
@@ -127,12 +128,12 @@
         if (bleServer && bleServer.connected) {
             bleServiceFound.getCharacteristic(animationCharacteristic)
             .then(characteristic => {
-                console.log("Found the LED characteristic: ", characteristic.uuid);
+                console.debug("Found the animation characteristic: ", characteristic.uuid);
                 const data = new TextEncoder().encode(value);
                 return characteristic.writeValue(data);
             })
             .catch(error => {
-                console.error("Error writing to the LED characteristic: ", error);
+                console.error("Error writing to the animation characteristic: ", error);
             });
         } else {
             console.error ("Bluetooth is not connected. Cannot write to characteristic.")
@@ -142,7 +143,7 @@
 
     function disconnectDevice() {
         console.log("Disconnect Device.");
-        if (bleServer === null && bleServer.connected) {
+        if (bleServer !== null && bleServer.connected) {
             const oldServer = bleServer.disconnect();
             oldServer.then(() => {
                 console.log("Device Disconnected");
@@ -171,15 +172,15 @@
             // Získání seznamu služeb na zařízení
             const services = await server.getPrimaryServices();
             // Vypsání služeb do konzole
-            console.log('Seznam služeb na zařízení:');
+            console.debug('Seznam služeb na zařízení:');
             for (const service of services) {
-                console.log('Service UUID:', service.uuid);
+                console.debug('Service UUID:', service.uuid);
                 // Získání charakteristik pouze pokud je server GATT připojen
                 if (server.connected) {
                     const characteristics = await service.getCharacteristics();
-                    console.log('Seznam charakteristik:');
+                    console.debug('Seznam charakteristik:');
                     for (const characteristic of characteristics) {
-                        console.log('Characteristic UUID:', characteristic.uuid);
+                        console.debug('Characteristic UUID:', characteristic.uuid);
                         if (characteristic.uuid == '000077e7-0000-1000-8000-00805f9b34fb') {
                             const value = "pulz";
                             const data = new TextEncoder().encode(value);
