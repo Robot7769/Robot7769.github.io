@@ -80,9 +80,9 @@
     disconnectButton.addEventListener('click', () => disconnectDevice());
 
     // Write to the ESP32 LED Characteristic
-    anim1.addEventListener('click', () => writeOnCharacteristic("rain"));
+    anim1.addEventListener('click', () => writeOnCharacteristic("rainbow"));
     anim2.addEventListener('click', () => writeOnCharacteristic("pulz"));
-    anim3.addEventListener('click', () => writeOnCharacteristic("night"));
+    anim3.addEventListener('click', () => writeOnCharacteristic("nightrider"));
     anim4.addEventListener('click', () => writeOnCharacteristic("off"));
 
     // Check if BLE is available in your Browser
@@ -130,10 +130,6 @@
                 console.log("Found the LED characteristic: ", characteristic.uuid);
                 const data = new TextEncoder().encode(value);
                 return characteristic.writeValue(data);
-            })
-            .then(() => {
-                latestValueSent.innerHTML = value;
-                console.log("Value written to AnimationCharacteristic:", value);
             })
             .catch(error => {
                 console.error("Error writing to the LED characteristic: ", error);
