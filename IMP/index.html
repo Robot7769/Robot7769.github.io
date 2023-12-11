@@ -106,7 +106,8 @@
                 });
                 console.log('Device Selected:', bleDevice.name);
             }
-            if (!bleDevice.gatt.connected) {
+            console.debug('Connecting to GATT Server...', bleDevice);
+            if (bleDevice.gatt.disconnected) {
                 bleServer = await bleDevice.gatt.connect();
             }        
             bleServiceFound = await bleServer.getPrimaryService(bleService);
