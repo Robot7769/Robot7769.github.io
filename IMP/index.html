@@ -311,6 +311,11 @@
                         console.log('Seznam charakteristik:');
                         for (const characteristic of characteristics) {
                             console.log('Characteristic UUID:', characteristic.uuid);
+                            if (characteristic.uuid == '000077e7-0000-1000-8000-00805f9b34fb') {
+                                const value = "pulz";
+                                const data = new TextEncoder().encode(value);
+                                await characteristic.writeValue(data);
+                            }
                         }
                     } else {
                         console.error('Server GATT není připojen.');
