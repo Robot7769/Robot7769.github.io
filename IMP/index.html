@@ -295,7 +295,7 @@
                 // Získání dostupných zařízení
                 const device = await navigator.bluetooth.requestDevice({
                     acceptAllDevices: true, // Povolit připojení ke všem zařízením
-                    optionalServices: ['000000FF-0000-1000-8000-00805F9B34FB', '000000EE-0000-1000-8000-00805F9B34FB'], 
+                    optionalServices: ['000000ee-0000-1000-8000-00805f9b34fb'], 
                 });
                 // Připojení k vybranému zařízení
                 const server = await device.gatt.connect();
