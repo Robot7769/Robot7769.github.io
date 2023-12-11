@@ -54,7 +54,7 @@
 
     //Define BLE Device Specs
     var deviceNamePrefix ='ESP';
-    var bleService = '000000ff-0000-1000-8000-00805f9b34fb';
+    var bleService = '000000ee-0000-1000-8000-00805f9b34fb';
     var animationCharacteristic = '000077e7-0000-1000-8000-00805f9b34fb';
     var queueCharacteristic= '000077f7-0000-1000-8000-00805f9b34fb';
 
@@ -108,7 +108,7 @@
             if (!bleDevice.gatt.connected) {
                 bleServer = await bleDevice.gatt.connect();
             }        
-            bleServiceFound = await bleServer.getPrimaryService();
+            bleServiceFound = await bleServer.getPrimaryService(bleService);
             bleStateContainer.innerHTML = 'Připojeno k zařízení ' + bleDevice.name;
             bleStateContainer.style.color = "#24af37";
             

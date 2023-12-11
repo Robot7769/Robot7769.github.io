@@ -13,6 +13,8 @@ h1 {
 }
 body {
     margin: 0;
+    color: aliceblue;
+    background-color: rgb(192, 189, 189);
 }
 .content {
     padding: 50px;
@@ -26,8 +28,8 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 .card {
-    background-color: rgb(37, 36, 36);
-    box-shadow: 2px 2px 12px 1px rgba(158, 158, 158, 0.5);
+    background-color: rgb(165, 164, 164);
+    box-shadow: 2px 2px 12px 1px rgba(43, 43, 43, 0.5);
 }
 button {
     color: rgb(17, 57, 58);
