@@ -32,8 +32,10 @@
                 <button id="anim4" class="animBtn">off</button>
             </div>
             <div class="card">
-                <h2>Fronta animací</h2>
-                <p class="reading"><span id="valueContainer">prázdná</span></p>
+                <h2>Trvání animace</h2>
+                <div class="slider-div">
+                    <input type="range" min="10" max="100" value="50" class="slider" id="duration">
+                </div>
             </div>
         </div>
     </div>
@@ -53,6 +55,7 @@
     const anim4 = document.getElementById('anim4');
     const anim5 = document.getElementById('anim5');
     const anim6 = document.getElementById('anim6');
+    const durationSlider = document.getElementById('duration');
     const retrievedValue = document.getElementById('valueContainer');
     const bleStateContainer = document.getElementById('bleState');
 
@@ -60,13 +63,11 @@
     var deviceNamePrefix ='ESP';
     var bleService = '000000ee-0000-1000-8000-00805f9b34fb';
     var animationCharacteristic = '000077e7-0000-1000-8000-00805f9b34fb';
-    var queueCharacteristic= '000077f7-0000-1000-8000-00805f9b34fb';
 
     //Global Variables to Handle Bluetooth
     var bleDevice = null;
     var bleServer = null;
     var bleServiceFound;
-    var queueCharacteristicFound;
 
     // Connect Button (search for BLE Devices only if BLE is available)
     connectButton.addEventListener('click', async (event) => {
@@ -91,6 +92,11 @@
     anim4.addEventListener('click', () => writeOnCharacteristic("off"));
     anim5.addEventListener('click', () => writeOnCharacteristic("count"));
     anim6.addEventListener('click', () => writeOnCharacteristic("random"));
+
+    durationSlider.addEventListener('change', () => {
+        var value = durationSlider.value;
+        writeOnCharacteristic("duration" + value);
+    });
 
     // Check if BLE is available in your Browser
     function isWebBluetoothEnabled() {
@@ -124,6 +130,7 @@
         } catch (error) {
             console.error('BLE Error:', error);
             bleDevice = null;
+            await onDisconnected(null);
         }
     }
 
@@ -148,6 +155,7 @@
             console.error ("Bluetooth is not connected. Cannot write to characteristic.")
             window.alert("Bluetooth není připojeno. Nelze zapisovat do charakteristiky. \n Nejprve se připojte k BLE!")
             bleDevice = null;
+            onDisconnected(null);
         }
     }
 
@@ -165,6 +173,7 @@
             console.error("Bluetooth is not connected.");
             window.alert("Bluetooth není připojeno.")
             bleDevice = null;
+            await onDisconnected(null);
         }
     }
 
