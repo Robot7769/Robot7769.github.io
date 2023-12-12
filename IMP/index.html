@@ -139,6 +139,7 @@
         } else {
             console.error ("Bluetooth is not connected. Cannot write to characteristic.")
             window.alert("Bluetooth není připojeno. Nelze zapisovat do charakteristiky. \n Nejprve se připojte k BLE!")
+            bleDevice = null;
         }
     }
 
@@ -155,6 +156,7 @@
             // Throw an error if Bluetooth is not connected
             console.error("Bluetooth is not connected.");
             window.alert("Bluetooth není připojeno.")
+            bleDevice = null;
         }
     }
 
