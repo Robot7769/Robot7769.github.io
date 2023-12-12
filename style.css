@@ -39,6 +39,7 @@ button {
     border: none;
     cursor: pointer;
     border-radius: 4px;
+    margin-bottom: 5px;
 }
 
 .animBtn{
@@ -59,7 +60,9 @@ button {
 }
 
 .slider-div {
-    width: 100%;
+    width: 90%;
+    margin: auto;
+    margin-bottom: 10px;
   }
   
   /* The slider itself */
@@ -67,12 +70,13 @@ button {
     -webkit-appearance: none;  /* Override default CSS styles */
     appearance: none;
     width: 100%; /* Full-width */
-    height: 25px; /* Specified height */
+    height: 15px; /* Specified height */
     background: #d3d3d3; /* Grey background */
     outline: none; /* Remove outline */
     opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
     -webkit-transition: .2s; /* 0.2 seconds transition on hover */
     transition: opacity .2s;
+    border-radius: 7.5px;
   }
   
   .slider:hover {
@@ -83,15 +87,17 @@ button {
   .slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 25px;
-    height: 25px;
+    width: 30px;
+    height: 30px;
     background: #24af37;
     cursor: pointer;
+    border-radius: 100%;
   }
   
   .slider::-moz-range-thumb {
-    width: 25px;
-    height: 25px;
+    width: 30px;
+    height: 30px;
     background: #24af37;
     cursor: pointer;
+    border-radius: auto;
   }
