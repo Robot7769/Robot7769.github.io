@@ -27,6 +27,7 @@
                 <button id="anim1" class="animBtn">RainBow</button>
                 <button id="anim2" class="animBtn">Pulz</button>
                 <button id="anim3" class="animBtn">Nightrider</button>
+                <button id="anim5" class="animBtn">Count</button>
                 <button id="anim4" class="animBtn">off</button>
             </div>
             <div class="card">
@@ -49,6 +50,7 @@
     const anim2 = document.getElementById('anim2');
     const anim3 = document.getElementById('anim3');
     const anim4 = document.getElementById('anim4');
+    const anim5 = document.getElementById('anim5');
     const retrievedValue = document.getElementById('valueContainer');
     const bleStateContainer = document.getElementById('bleState');
 
@@ -85,6 +87,7 @@
     anim2.addEventListener('click', () => writeOnCharacteristic("pulz"));
     anim3.addEventListener('click', () => writeOnCharacteristic("nightrider"));
     anim4.addEventListener('click', () => writeOnCharacteristic("off"));
+    anim5.addEventListener('click', () => writeOnCharacteristic("count"));
 
     // Check if BLE is available in your Browser
     function isWebBluetoothEnabled() {
