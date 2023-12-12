@@ -30,7 +30,7 @@
                 <button id="anim4" class="animBtn">off</button>
             </div>
             <div class="card">
-                <h2>Fronta</h2>
+                <h2>Fronta animací</h2>
                 <p class="reading"><span id="valueContainer">prázdná</span></p>
             </div>
         </div>
@@ -103,6 +103,7 @@
             if (bleDevice === null) {
                 bleDevice = await navigator.bluetooth.requestDevice({
                     filters: [{ namePrefix: deviceNamePrefix }], // Filtr pro vyhledání zařízení
+                    optionalServices: ['000000ee-0000-1000-8000-00805f9b34fb'],
                 });
                 console.log('Device Selected:', bleDevice.name);
             }
